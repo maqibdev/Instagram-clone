@@ -1,0 +1,35 @@
+<% single_carosal = 0 %>
+  <%= render 'carosal', post: @post, dynamic_id: single_carosal %>
+<%= render 'edit_del', post: @post, button_hide:1 %>
+
+<div class='container text-center resize-carsol'>
+  <% if flash.any? %>
+    <% flash.each do |type, msg| %>
+      <div>
+        <%= msg %>
+      </div>
+    <% end %>
+  <% end %>
+
+  <h2>Comments</h2>
+  <% @post.comments.each do |comment| %>
+    <p>
+      <strong><%= comment.user.name %>:</strong>
+      <%= comment.content %>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+      <%if comment.user_id==current_user.id %>
+        <%= link_to 'Edit',edit_post_comment_path(@post, comment),class:"btn btn-outline-info btn-sm" %>
+      <% end %>
+
+      <%if comment.user_id==current_user.id || comment.post.user_id==current_user.id %>
+        <%= link_to 'Delete', [comment.post, comment],
+                  method: :delete,
+                  data: { confirm: 'Are you sure?' },class:"btn btn-outline-danger btn-sm" %>
+      <% end %>
+    </p>
+
+  <% end %>
+
+  <%= render 'commentform', post: @post, comment: @post.comments.build, submit_name:'Post', comment_label:'Add a comment:', btn_id:@post.id %>
+
+</div>

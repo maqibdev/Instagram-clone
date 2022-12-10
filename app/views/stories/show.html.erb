@@ -1,0 +1,35 @@
+<%= link_to '<button type="button" class="btn btn-outline-primary"><i class="fa fa-arrow-left fa-2x"></i></button>'.html_safe,user_path(@stories.first.user.id) %>
+
+<div class='back-color'>
+  <div class='container text-center resize-carsol'>
+    <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000">
+
+      <div class="carousel-inner">
+        <%@stories.each_with_index do|pic,index|%>
+
+          <div class="carousel-item <%= 'active' if index == (@stories.length-1) %>">
+            <%=image_tag pic.storyimage.variant(resize: '936x700!'), class:'d-block w-100'%>
+
+            <%if pic.user_id==current_user.id%>
+              <%= link_to '<button type="button" class="btn btn-danger"><i class="fa fa-trash fa-2x"></i></button>'.html_safe,
+               pic, method: :delete, data: { confirm: 'Are you sure?' }
+              %>
+            <%end%>
+          </div>
+
+        <%end%>
+      </div>
+
+      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+
+      <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
+
+    </div>
+  </div>
+</div>

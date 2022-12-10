@@ -1,0 +1,8 @@
+<% single_carosal = 0 %>
+<%= render 'posts/carosal', post: @comment.post, dynamic_id: single_carosal %>
+<%= render 'posts/edit_del', post: @comment.post, button_hide:0  %>
+
+<div class='container text-center resize-carsol'>
+   <h2>Comments</h2>
+   <%= render 'posts/commentform', post: @comment.post, comment:@comment, submit_name:'Update', comment_label:' ', btn_id:@comment.post.id %>
+</div>

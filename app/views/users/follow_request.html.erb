@@ -1,0 +1,29 @@
+<div class="container text-center mt-5">
+  <% if @follow == [] %>
+    <h1>No Requests Pending!</h1>
+
+  <% else %>
+    <div class="row">
+
+      <% @follow.each do |follow| %>
+        <div class="col-md-4">
+          <div class="card" style="width: 21rem;">
+            <%=link_to image_tag(follow.user.photo.variant(resize: '336x250!'), class:'card',style:'width: 21rem;'), user_path(follow.user.id)%>
+
+            <div class="card-body">
+              <h5 class="card-title"><%= follow.user.name %></h5>
+              <p class="card-text"><%= follow.user.email %></p>
+              <p>
+                <%=link_to 'Accept Request', "/followings/#{follow.user.id}", method: :patch, class:'btn btn-outline-primary'%>
+                <%=link_to 'Decline Request', decline_request_following_path(follow.user.id), method: :delete,
+                 data: { confirm: 'Are you sure?' }, class:'btn btn-outline-danger'
+                %>
+              </p>
+            </div>
+
+          </div>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+</div>

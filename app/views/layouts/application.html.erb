@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Instagram</title>
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  <%= favicon_link_tag asset_path('insta.png') %>
+</head>
+
+<body>
+
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container">
+      <a class="navbar-brand" href="#"><%= image_tag 'insta_logo.png', class:'resize_logo' %></a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+
+        <% if user_signed_in?%>
+          <%= form_tag search_users_path,method: :get,class:'d-flex' do %>
+            <%= text_field_tag :query,params[:query],placeholder:' Find friends...', required: true%>&nbsp;
+            <%= submit_tag 'Search',name:nil,class:"btn btn-outline-success" %>
+          <% end %>
+        <% end %>
+
+        <ul class="navbar-nav">
+
+          <% if user_signed_in? %>
+
+            <li class="nav-item">
+              <%= render 'layouts/iconhome' %>
+            </li>
+
+            <li class="nav-item dropdown">
+              <%= render 'layouts/iconadd' %>
+
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li><%= link_to 'Post',new_post_path,class:'dropdown-item' %></li>
+                <li><%= link_to 'Story',new_story_path,class:'dropdown-item' %></li>
+              </ul>
+            </li>
+
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
+                aria-expanded="false">
+                <%= image_tag(current_user.photo, class:'resize rounded-circle border border-dark border-1') %>
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li><%= link_to 'Profile', user_path(current_user), class:'dropdown-item' %></li>
+
+                <% if current_user.status=='close' %>
+                  <li>
+                    <%= link_to 'Follow requests', follow_request_user_path(current_user), class:'dropdown-item',id:"#exampleModal" %>
+                  </li>
+                <% end %>
+
+                <li>
+                  <hr class="dropdown-divider">
+                </li>
+                <li><%= link_to 'Sign Out',destroy_user_session_path,method: :delete,class:'dropdown-item' %></li>
+              </ul>
+            </li>
+
+          <% else %>
+            <li class="nav-item">
+              <%= link_to 'Sign In',new_user_session_path,class:'nav-link' %>
+            </li>
+
+            <li class="nav-item">
+              <%= link_to 'Sign Up',new_user_registration_path,class:'nav-link' %>
+            </li>
+          <% end %>
+
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <%=render 'layouts/notice'%>
+
+  <%= yield %>
+
+</body>
+
+</html>

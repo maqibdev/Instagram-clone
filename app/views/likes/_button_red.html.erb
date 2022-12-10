@@ -1,0 +1,4 @@
+<%= link_to fa_icon("heart", text: "Like"), post_likes_path(@temp.id),method: :post,
+ :remote => true, class: "btn btn-outline-danger like-button#{@temp.id}c change1",
+  id: "register-button"
+%>

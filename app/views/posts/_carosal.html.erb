@@ -1,0 +1,32 @@
+<div class='container resize-carsol py-3 mt-5'>
+  <%= link_to image_tag(post.user.photo.variant(resize: '56x56!'),
+   class:'resize-5 rounded-circle border border-dark border-1'), user_path(post.user.id)
+  %>
+</div>
+
+<div class='container text-center resize-carsol'>
+  <div id="carouselExampleControls<%= dynamic_id %>" class="carousel slide" data-bs-wrap="false" data-bs-interval="false">
+    <div class="carousel-inner">
+
+      <% post.pictures.each_with_index do|pic,index| %>
+        <div class="carousel-item <%= 'active' if index == 0 %>">
+          <%= image_tag pic.variant(resize: '936x600!'),class:'d-block w-100' %>
+        </div>
+      <%end%>
+
+    </div>
+
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls<%= dynamic_id %>"
+      data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls<%= dynamic_id %>"
+      data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+
+  </div>
+</div>

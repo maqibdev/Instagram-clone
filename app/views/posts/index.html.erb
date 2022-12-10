@@ -1,0 +1,20 @@
+<div class='container text-center resize-carsol'>
+  <h1>Posts</h1>
+</div>
+
+<%@posts.each_with_index do |post,index| %>
+  <% if post.user.status == 'close' && post.user.id != current_user.id %>
+    <% if request_accepted_or_not(post.user) %>
+      <% next %>
+    <% end %>
+  <% end %>
+
+  <%= render 'carosal', post: post, dynamic_id:index %>
+  <%= render 'edit_del', post: post, button_hide:0 %>
+
+  <div class='container text-center resize-carsol'>
+    <%= render 'commentform', post: post, comment: post.comments.build, submit_name:'Post', comment_label:'Add a comment:', btn_id:post.id%>
+    <hr>
+  </div>
+
+<%end%>

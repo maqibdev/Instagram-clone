@@ -1,0 +1,3 @@
+$(".j-test<%= @temp.id %>").text('<%= pluralize(@temp.likes.count,'Like') %>');
+
+$(".like-button<%= @temp.id %>r").replaceWith( "<%= j render(partial: 'button_red') %>" );

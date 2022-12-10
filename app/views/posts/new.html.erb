@@ -1,0 +1,25 @@
+<div class='container text-center pt-5'>
+  <h1>Create a new post</h1>
+  <hr>
+
+  <%= form_with(model: @post, local: true) do |form| %>
+    <%= render 'error', post: @post%>
+    <h5>
+      <%= form.label 'add Images here' %><br>
+    </h5>
+    <p>
+      <%= form.file_field :pictures, accept: 'image/png,image/jpeg', required: true, :multiple => true %>
+    </p>
+    <h3>
+      <%= form.label 'Write a caption' %>
+      <br>
+      <%= form.text_area :content %>
+    </h3>
+
+    <p>
+      <%= form.submit:Create, class:"btn btn-outline-primary" %>
+    </p>
+  <% end %>
+
+  <hr>
+</div>

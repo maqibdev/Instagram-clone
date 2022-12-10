@@ -1,0 +1,25 @@
+<div class="container text-center mt-5">
+  <% if @user == [] %>
+    <h1>Nothing found!</h1>
+
+  <% elsif @user.nil? %>
+    <h1>Search bar cannot be empty!</h1>
+
+  <% else %>
+    <div class="row">
+
+      <% @user.each do |user| %>
+        <div class="col-md-4">
+          <div class="card" style="width: 21rem;">
+            <%= link_to image_tag(user.photo.variant(resize: '336x250!'), class:'card',style:'width: 21rem;'), user_path(user.id) %>
+            <div class="card-body">
+              <h5 class="card-title"><%= user.name %></h5>
+              <p class="card-text"><%= user.email %></p>
+            </div>
+          </div>
+        </div>
+      <%end%>
+
+    </div>
+  <%end%>
+</div>

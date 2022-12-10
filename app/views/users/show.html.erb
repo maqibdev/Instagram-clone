@@ -1,0 +1,78 @@
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-md-5">
+      <div>
+        <% if @user.stories.empty? || !private_or_not?(@user) %>
+          <%= image_tag @user.photo.variant(resize: '176x176!'), class:'resize-2 rounded-circle border border-dark border-1' %>
+        <% else %>
+          <%= link_to image_tag(@user.photo.variant(resize: '176x176!'), class:'resize-2 rounded-circle border border-dark border-1'), story_path(@user.stories.first.id) %>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="col-md-7">
+      <h3>
+        <%= @user.email[/^[^@]+/]%>&nbsp;&nbsp;&nbsp;&nbsp;
+        <% if currentuser_or_not?(@user) %>
+          <button type="button" class="btn btn-sm btn-outline-info">
+            <%=link_to 'Edit Profile',edit_user_registration_path,class:'nav-link' %>
+          </button>
+
+        <% elsif status_follow_or_not?(@user) %>
+          <button type="button" class="btn btn-sm btn-outline-info">
+            <%= link_to 'Follow', user_followings_path(@user.id), method: :post, class:'nav-link' %>
+          </button>
+
+        <%else%>
+          <% if status_public_or_not?(@user) %>
+            <button type="button" class="btn btn-sm btn-outline-info">
+              <%= link_to 'Unfollow', "/followings/#{@user.id}", method: :delete, data: { confirm: 'Are you sure?' }, class:'nav-link' %>
+            </button>
+          <% else %>
+
+            <button type="button" class="btn btn-sm btn-outline-info">
+              <%= link_to 'Request sent',"/followings/#{@user.id}", method: :delete, data: { confirm: 'Are you sure?' }, class:'nav-link' %>
+            </button>
+          <% end %>
+        <% end %>
+      </h3>
+
+      <br>
+
+      <h4>
+        <b><%= @user.posts.count %></b>
+
+        posts &nbsp;&nbsp;&nbsp;
+
+        <b><%= followers_count(@user.id) %></b>
+
+        followers &nbsp;&nbsp;&nbsp;
+
+        <b><%= followed_count(@user) %></b>
+
+        following
+      </h4>
+      <h3>
+        <b><%= @user.name %></b>
+      </h3>
+    </div>
+  </div>
+  <hr>
+  <% if private_or_not?(@user) %>
+    <div class="row">
+      <%@user.posts.each do |post| %>
+        <div class="col-md-4 mb-4">
+          <%= link_to (image_tag post.pictures.first.variant(resize: '400x400!')),post_path(post) %>
+        </div>
+      <% end %>
+    </div>
+  <% else %>
+    <h6 class="text-center text-info">This account is private follow it to view content!</h5>
+  <% end %>
+
+  <hr>
+  <div class="text-center">
+    <p>English © 2022 Instagram from Meta</p>
+  </div>
+
+</div>

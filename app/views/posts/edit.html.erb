@@ -1,0 +1,16 @@
+<div class='container text-center resize-carsol'>
+  <% single_carosal = 0 %>
+  <%= render 'carosal', post: @post, dynamic_id:single_carosal %>
+
+  <%= form_with(model: @post, local: true) do |form| %>
+    <p>
+      <%= form.text_area :content %>
+    </p>
+
+    <p>
+      <%= form.submit %>
+    </p>
+  <% end %>
+
+  <%= link_to 'back', posts_path %>
+</div>

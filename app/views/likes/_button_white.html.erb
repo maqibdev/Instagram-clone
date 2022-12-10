@@ -1,0 +1,4 @@
+<%= link_to fa_icon("heart", text: "Like"), like_path(@temp.likes.where(user_id: current_user.id)[0].id),
+ method: :delete, :remote => true, class: "btn btn-outline-danger like-button#{@temp.id}r change2",
+  id: "register-button"
+%>

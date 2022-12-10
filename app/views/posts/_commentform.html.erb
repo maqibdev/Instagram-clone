@@ -1,0 +1,19 @@
+<%= form_with(model: [post,comment], local: true) do |form| %>
+  <p>
+    <%= form.label comment_label %>
+    <%= form.text_field :content,class:'form-control-lg',id:"text_field#{ btn_id }"%>
+    <%= form.submit submit_name ,class:"btn btn-outline-primary",id:"submitButtonId#{ btn_id }"%>
+  </p>
+<% end %>
+
+<script>
+if($('#text_field<%= btn_id %>').val() ==  "")
+   $('#submitButtonId<%= btn_id %>').attr('disabled', true);
+
+$('#text_field<%= btn_id %>').keyup(function(){
+    if($('#text_field<%= btn_id %>').val() !=  "")
+         $('#submitButtonId<%= btn_id %>').attr('disabled', false);
+    else
+         $('#submitButtonId<%= btn_id %>').attr('disabled', true);
+});
+</script>

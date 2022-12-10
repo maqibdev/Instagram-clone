@@ -1,0 +1,23 @@
+<div class='container text-center pt-5'>
+  <h1>Tell a new Story!</h1>
+  <hr>
+
+  <%= form_with(model: @story, local: true) do |form| %>
+    <%= render 'errors', story: @story%>
+
+    <h5>
+      <%= form.label 'add Image here' %><br>
+    </h5>
+
+    <p>
+      <%= form.file_field :storyimage, accept: 'image/png,image/jpeg', required: true %>
+    </p>
+
+    <p>
+      <%= form.submit:Create, class:"btn btn-outline-primary" %>
+    </p>
+
+  <% end %>
+
+  <hr>
+</div>

@@ -1,0 +1,56 @@
+<div class='container resize-carsol'>
+  <div class="btn-group text-start" role="group" aria-label="Basic mixed styles example">
+
+    <%if like_or_not?(post.id)%>
+
+      <%= link_to fa_icon("heart", text: "Like"), post_likes_path(post.id), method: :post,
+       :remote => true, class: "btn btn-outline-danger like-button#{post.id}c change1",
+        id: "register-button"
+      %>
+
+    <%else%>
+
+      <%= link_to fa_icon("heart", text: "Like"), like_path(post.likes.find_by(user_id:current_user.id).id),
+       method: :delete, :remote => true, class: "btn btn-outline-danger like-button#{post.id}r change2",
+        id: "register-button"
+      %>
+
+    <%end%>
+
+      <%= link_to '<button type="button" class="btn btn-outline-success"><i class="fa fa-comment"></i></button>'.html_safe,post_path(post) if button_hide == 0 %>
+
+    <%if post.user_id== current_user.id %>
+
+      <%= link_to '<button type="button" class="btn btn-outline-primary"><i class="fa fa-pencil"></i></button>'.html_safe,edit_post_path(post)%>
+
+      <%= link_to '<button type="button" class="btn btn-outline-dark"><i class="fa fa-trash"></i></button>'.html_safe,post_path(post),
+       :method => "delete" , data: { confirm: 'Are you sure?' }
+      %>
+
+    <%end%>
+
+  </div>
+  <br>
+
+  <p class='j-test<%= post.id %>'>
+    <%= pluralize(post.likes.count,'Like') %>
+  <p>
+
+  <p>
+    <b>
+      <%= post.user.name%>
+    </b>
+
+    <%= post.content %>
+
+    <br>
+
+    <% if(post.updated_at-(post.created_at)>1) %>
+      <span class='post-time'>Edited <%= time_ago_in_words(post.updated_at) %> AGO</span>
+    <% else %>
+      <span class='post-time'>Posted <%= time_ago_in_words(post.created_at) %> AGO</span>
+    <% end %>
+
+  </p>
+  <hr>
+</div>
